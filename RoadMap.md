@@ -1,0 +1,6 @@
+- create-react-app project structure
+- add components folder, build Navigation component
+- install tachyons for css 
+- build Logo component, add logo
+- build ImageLinkForm component 
+- build Rank component(non-functional)
