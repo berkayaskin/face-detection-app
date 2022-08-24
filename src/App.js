@@ -77,33 +77,34 @@ class App extends Component {
   
   onButtonSubmit = () => {
     this.setState({imageUrl: this.state.input});
-      fetch('https://smartbrain-master.herokuapp.com/imageurl', {
-        method: 'post',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-          input: this.state.input
-        })
-      })
-      .then(response => response.json())
-      .then(response => {
-        if (response) {
-          fetch('https://smartbrain-master.herokuapp.com/image', {
-            method: 'put',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-              id: this.state.user.id
-            })
-          })
-            .then(response => response.json())
-            .then(count => {
-              this.setState(Object.assign(this.state.user, { entries: count}))
-            })
-            .catch(console.log)
-
-        }
-        this.displayFaceBoxes(this.calculateFaceLocations(response))
-      })
-      .catch(err => console.log(err));
+      fetch("https://face-detection-app-back-end.herokuapp.com/imageurl", {
+				method: "post",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({
+					input: this.state.input,
+				}),
+			})
+				.then((response) => response.json())
+				.then((response) => {
+					if (response) {
+						fetch("https://face-detection-app-back-end.herokuapp.com/image", {
+							method: "put",
+							headers: { "Content-Type": "application/json" },
+							body: JSON.stringify({
+								id: this.state.user.id,
+							}),
+						})
+							.then((response) => response.json())
+							.then((count) => {
+								this.setState(
+									Object.assign(this.state.user, { entries: count })
+								);
+							})
+							.catch(console.log);
+					}
+					this.displayFaceBoxes(this.calculateFaceLocations(response));
+				})
+				.catch((err) => console.log(err));
   }
   
   onRouteChange = (route) => {
